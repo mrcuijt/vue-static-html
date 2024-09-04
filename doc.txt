@@ -1,0 +1,48 @@
+
+<script src="./operator.js"></script>
+<script src="./web_socket.js"></script>
+<script src="./vue.js"></script>
+<script src="./main.js"></script>
+
+http://localhost:9100/operator.js
+http://localhost:9100/web_socket.js
+http://localhost:9100/vue.js
+http://localhost:9100/main.js
+
+document.body.innerHTML = `  <div id="app">
+    <content-001></content-001>
+  </div>`
+
+var s1 = document.createElement("script")
+var s2 = document.createElement("script")
+var s3 = document.createElement("script")
+
+s1.src = "http://localhost:9100/operator.js"
+s2.src = "http://localhost:9100/web_socket.js"
+s3.src = "http://localhost:9100/vue.js"
+
+document.body.append(s1)
+document.body.append(s2)
+document.body.append(s3)
+
+var s4 = document.createElement("script")
+s4.src = "http://localhost:9100/main.js"
+document.body.append(s4)
+
+
+
+var ws1 = document.createElement("script")
+var ws2 = document.createElement("script")
+var ws3 = document.createElement("script")
+
+ws1.src = "http://localhost:9100/operator.js"
+ws2.src = "http://localhost:9100/web_socket.js"
+ws3.src = "http://localhost:9100/vue.js"
+
+document.body.append(ws1)
+document.body.append(ws2)
+document.body.append(ws3)
+
+var ws4 = document.createElement("script")
+ws4.src = "http://localhost:9100/main.js"
+document.body.append(ws4)
