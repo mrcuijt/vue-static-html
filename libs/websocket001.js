@@ -53,7 +53,7 @@ class danmukSocket {
   getAuth(uid, roomid, buvid, token) {
     if (!uid) uid = 0;
     if (!roomid) roomid = 3246070;
-    if (!buvid) buvid = "";
+    if (!buvid) buvid = "3282C0C6-5FCC-0E5E-7889-D74AE1D3E76789040infoc";
     if (!token) throw new Error("auth token is null");
     var data = `{"uid":${uid},"roomid":${roomid},"protover":3,"buvid":"${buvid}","platform":"web","type":2,"key":"${token}"}`;
     var buffer = window.r.a.getEncoder().encode(data).buffer;
