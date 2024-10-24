@@ -6,8 +6,14 @@ class Api {
     this.choose = 0;
   }
 
-  getTokenApi(roomid) {
-    return `https://api.live.bilibili.com/xlive/web-room/v1/index/getDanmuInfo?id=${roomid}&type=0`;
+  async getTokenApi(roomid) {
+    var tokenApi = `https://api.live.bilibili.com/xlive/web-room/v1/index/getDanmuInfo?id=${roomid}&type=0`;
+    var result = await new Promise((resolve, reject) => {
+      ajaxJson(tokenApi, null).then(function (data) {
+        resolve(data);
+      });
+    });
+    return result;
   }
 
   initToken(result) {
@@ -16,14 +22,14 @@ class Api {
   }
 
   wsurl() {
-    var host = hosts[choose].host;
-    var port = hosts[choose].wss_port;
+    var choose = this.choose;
+    var host = this.hosts[choose].host;
+    var port = this.hosts[choose].wss_port;
     return `wss://${host}:${port}/sub`;
   }
 }
 
 var uploadApi = "https://a.bilibili.com:8600/tools/upload";
-
 
 function ajaxJson(url, obj) {
   var promise = new Promise(function (resolve, reject) {
@@ -78,7 +84,7 @@ function ajaxJson(url, obj) {
   return promise;
 }
 
-function fileUpload(url, obj) {
+function fileUpload(url, roomid, obj) {
   var promise = new Promise(function (resolve, reject) {
     // 1. create XMLHttpRequset Object.
     var xmlhttp;

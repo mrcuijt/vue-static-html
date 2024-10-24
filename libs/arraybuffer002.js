@@ -1,4 +1,3 @@
-
 var wsBinaryHeaderList = [
   { name: "Header Length", key: "headerLen", bytes: 2, offset: 4, value: 16 },
   { name: "Protocol Version", key: "ver", bytes: 2, offset: 6, value: 1 },
@@ -147,12 +146,10 @@ function getR(t, e, n) {
 }
 
 window.r = {};
-
-getR(buffer, r, {});
-
-var obj = convertToObject(buffer);
-
-console.info(obj);
+getR([], r);
+// getR(buffer, r, {});
+// var obj = convertToObject(buffer);
+// console.info(obj);
 
 // for (tag in window) {
 //   console.info(tag, window[tag]);

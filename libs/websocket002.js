@@ -9,6 +9,7 @@ class danmukSocket {
     this.retry = true;
     this.running = false;
     this.interval = 0;
+    this.intervalHeart = 0;
     this.process = process;
   }
   init(uid, roomid, buvid, token, wsurl) {
@@ -19,20 +20,29 @@ class danmukSocket {
     this.wsurl = wsurl;
   }
   connection() {
+    this.retry = true;
     this.ws = new WebSocket(this.wsurl);
     this.ws.binaryType = "arraybuffer";
-    this.ws.onpen = (evt) => {
+    this.ws.onopen = (evt) => {
       this.onOpen(evt);
     };
     this.ws.onclose = (evt) => {
       this.onClose(evt);
     };
   }
+  close() {
+    this.retry = false;
+    this.ws.close();
+  }
   onOpen(evt) {
     this.running = true;
-    this.send();
+    this.auth(this.uid, this.roomid, this.buvid, this.token);
     this.ws.onmessage = (evt) => {
-      this.heart();
+      if (this.intervalHeart === 0) {
+        this.intervalHeart = setInterval(() => {
+          this.heart();
+        }, 30000);
+      }
       this.onMessage(evt);
     };
   }
@@ -42,7 +52,13 @@ class danmukSocket {
   onClose(evt) {
     this.running = false;
     clearInterval(this.interval);
-    if (this.retry) setTimeout(this.connection, 3000);
+    clearInterval(this.intervalHeart);
+    this.interval = 0;
+    this.intervalHeart = 0;
+    if (this.retry)
+      setTimeout(() => {
+        this.connection();
+      }, 3000);
   }
   send(message) {
     this.ws.send(message);
@@ -103,41 +119,4 @@ class danmukSocket {
     }
     return buffer;
   }
-}
-
-function start() {
-  // 建立 WebSocket
-  var ws = new WebSocket(wsurl);
-  window.ws = ws;
-
-  ws.binaryType = "arraybuffer";
-  ws.onopen = function (evt) {
-    console.log("Connection open ...");
-    ws.send(getAuth(uid, roomid, token));
-  };
-
-  var interval = 0;
-  var running = false;
-  window.interval = interval;
-  window.running = running;
-  ws.onmessage = function (evt) {
-    getStatus().innerText = roomid + " - running";
-    console.log("Received Message: " + evt.data);
-    var obj = convertToObject(evt.data);
-    console.info(obj);
-    fileUpload(uploadPath, obj);
-    //ws.close();
-    if (interval == 0 && running == false) {
-      sendHeart(ws);
-      running = true;
-      interval = setInterval(sendHeart, 15000, ws);
-    }
-  };
-
-  ws.onclose = function (evt) {
-    reset();
-    getStatus().innerText = roomid + " - closed";
-    console.log("Connection closed.");
-    if (retry) setTimeout(start, 3000);
-  };
 }
