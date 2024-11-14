@@ -14,6 +14,10 @@ function DANMUK_MSG_RESET_PROGRESS(data) {
   return data;
 }
 
+function DANMUK_MSG_ROLLING(data) {
+  return data;
+}
+
 var commands = {
   AUTH: "AUTH",
   FAIL: "FAIL",
@@ -28,6 +32,7 @@ var commands = {
 
   DANMUK_MSG: "DANMUK_MSG",
   DANMUK_NOTIFY: "DANMUK_NOTIFY",
+  DANMUK_MSG_ROLLING: "DANMUK_MSG_ROLLING",
   DANMUK_MSG_RESET_PROGRESS: "DANMUK_MSG_RESET_PROGRESS",
 };
 
@@ -45,14 +50,16 @@ taskSet.add(commands.TASK_INCREMENT_EXPECTED);
 
 taskSet.add(commands.DANMUK_MSG);
 taskSet.add(commands.DANMUK_NOTIFY);
+taskSet.add(commands.DANMUK_MSG_ROLLING);
 taskSet.add(commands.DANMUK_MSG_RESET_PROGRESS);
 
 var cmder = {
   taskSet: taskSet,
   TASK_INIT: TASK_INIT,
   TASK_DATA_FIX: TASK_DATA_FIX,
-  DANMUK_MSG: DANMUK_MSG,
   AUTH_SUCCESS: DANMUK_MSG_RESET_PROGRESS,
+  DANMUK_MSG: DANMUK_MSG,
+  DANMUK_MSG_ROLLING: DANMUK_MSG_ROLLING,
   DANMUK_MSG_RESET_PROGRESS: DANMUK_MSG_RESET_PROGRESS,
 };
 
