@@ -13,6 +13,7 @@ class danmukSocket {
     this.process = process;
   }
   init(uid, roomid, buvid, token, wsurl) {
+    this.retry = true;
     this.uid = uid;
     this.roomid = roomid;
     this.buvid = buvid;
@@ -20,7 +21,6 @@ class danmukSocket {
     this.wsurl = wsurl;
   }
   connection() {
-    this.retry = true;
     this.ws = new WebSocket(this.wsurl);
     this.ws.binaryType = "arraybuffer";
     this.ws.onopen = (evt) => {

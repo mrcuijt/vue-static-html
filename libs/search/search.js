@@ -26,9 +26,9 @@ Vue.component("search-001", {
           <div class="danmuk">
             <ul>
               <li
-                v-for="item in danmukArry"
+                v-for="(item, index) in danmukArry"
                 :key="item.id"
-              >{{ item.id }} | {{ item.danmuk }} | {{ item.danmukTime }} | {{ item.danmukUserName }} | {{ item.danmukUserId }}</li>
+              >{{ index + 1 > 9 ? index + 1 : "0" + (index + 1) }} | {{ item.id }} | {{ item.danmuk }} | {{ item.danmukTime }} | {{ item.danmukUserName }} | {{ item.danmukUserId }}</li>
             </ul>
           </div>
         </div>
